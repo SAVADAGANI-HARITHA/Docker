@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+tools {
+    maven 'mymaven'
+}
+    stages {
+        stage('Code') {
+            steps {
+               git "https://github.com/SAVADAGANI-HARITHA/one.git"
+            }
+        }
+        stage("Build") {
+            steps {
+              sh "mvn clean install"  
+            }
+        }
+        stage("CQA") {
+            steps {
+                 withSonarQubeEnv('mysonar') {
+                    sh '''
+                         mvn clean verify \
+                         org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                        -Dsonar.projectKey=MyProject \
+                        -Dsonar.host.url=http://18.61.224.181:9000 \
+                        -Dsonar.login=cece62dd01ff162803ae13731bf9c6acdcf7217d
+                    '''
+                 }
+
+            }
+        }
+        stage ('QualityGates') {
+            steps {
+                waitForQualityGate abortPipeline: true, credentialsId: 'Sonar2'
+            }
+        }
+        stage ('Artifact') {
+            steps {
+            //nexusArtifactUploader artifacts: [[artifactId: 'myweb', classifier: '', file: 'target/myweb.war', type: 'war']], credentialsId: 'Nexus', groupId: 'in.javahome', nexusUrl: '40.192.68.35:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Nexus', version: '8.8.5'
+             script {
+                    def pom = readMavenPom file: 'pom.xml'
+                    nexusArtifactUploader(artifacts: [[artifactId: pom.artifactId, classifier: '', file: "target/myweb.war", type: 'war']], credentialsId: 'Nexus', groupId: pom.groupId, nexusUrl: '40.192.68.35:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Nexus', version: pom.version)
+                }
+
+            }
+        }
+    }
+}

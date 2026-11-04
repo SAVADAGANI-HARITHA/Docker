@@ -1,0 +1,141 @@
+    1  mkdir mustafa-user && cd mustafa-user
+
+    2  ll
+
+    3     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+    4  chmod +x kubectl
+
+    5  mv kubectl /usr/local/bin/
+
+    6  kubectl config view
+
+    7  openssl genrsa -out mustafa.key 2048
+
+    8  ll
+
+    9  openssl req -new -key mustafa.key -out mustafa.csr -subj "/CN=mustafa/O=group1"
+
+   10  openssl x509 -req -in mustafa.csr -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.key -CAcreateserial -out mustafa.crt -days 500
+
+   11  kubectl config set-credentials mustafa --client-certificate=mustafa.crt --client-key=mustafa.key
+
+   12  kubectl config view
+
+   13  kubectl config set-context devops --cluster=minikube --user=mustafa
+
+   14  kubectl config view
+
+   15  kubectl config use-context devops
+
+   16  kubectl config view
+
+   17  kubectl get po
+
+   18  kubectl get svc
+
+   19  kubectl get cm
+
+   20  kubectl get rs
+
+   21  kubectl get deploy
+
+   22  kubectl config use-context minikube
+
+   23  kubectl get po
+
+   24  kubectl get cm
+
+   25  kubectl get svc
+
+   26  kubectl create ns dev
+
+   27  vim role.yml
+
+   28  kubectl create -f role.yml
+
+   29  vim role.yml
+
+   30  kubectl create -f role.yml
+
+   31  vim role.yml
+
+   32  kubectl create -f role.yml
+
+   33  kubectl get role
+
+   34  kubectl get role -n dev
+
+   35  vim binding.yml
+
+   36  kubectl create -f binding.yml
+
+   37  kubectl config use-context devops
+
+   38  kubectl get po
+
+   39  vim binding.yml
+
+   40  kubectl get po
+
+   41  kubectl get po -n dev
+
+   42  kubectl run pod-1 --image=nginx -n dev
+
+   43  kubectl get po -n dev
+
+   44  kubectl delete pod pod-1 -n dev
+
+   45  kubectl get svc -n dev
+
+   46  kubectl config use-context minikube
+
+   47  vim role.yml
+
+   48  kubectl apply -f role.yml
+
+   49  kubectl config use-context devops
+
+   50  kubectl get po -n dev
+
+   51  kubectl delete pod pod-1 -n dev
+
+   52  kubectl get svc -n dev
+
+   53  kubectl auth can-i get po
+
+   54  kubectl auth can-i get po -n dev
+
+   55  kubectl auth can-i delete po -n dev
+
+   56  kubectl auth can-i delete rs -n dev
+
+   57  kubectl auth can-i delete cm  -n dev
+
+   58  kubectl config use-context minikube
+
+   59  cp role.yml cluster-role.yml
+
+   60  vim cluster-role.yml
+
+   61  kubectl create -f cluster-role.yml
+
+   62  cp binding.yml cluster-role-binding.yml
+
+   63  vim cluster-role-binding.yml
+
+   64  kubectl create -f cluster-role-binding.yml
+
+   65  kubectl config use-context devops
+
+   66  kubectl get po
+
+   67  kubectl run pod-1 --image=nginx
+
+   68  kubectl run pod-1 --image=nginx -n dev
+
+   69  kubectl get svc
+
+   70  kubectl get svc  -n dev
+
+   71  history

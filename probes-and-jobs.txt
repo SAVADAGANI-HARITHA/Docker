@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+spec:
+  containers:
+    - name: cont2
+      image: nginx
+      ports:
+        - containerPort: 80
+      args:
+      - /bin/sh
+      - -c
+      - touch /tmp/mustafa; sleep 1000;
+      livenessProbe:
+        exec:
+          command:
+          - cat
+          - /tmp/mustafa
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        timeoutSeconds: 30
+
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: myjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: cont1
+            image: nginx
+            ports:
+              - containerPort: 80
+            args:
+              - /bin/bash
+              - -c
+              - echo "Welcome to K8s session"; sleep 10;

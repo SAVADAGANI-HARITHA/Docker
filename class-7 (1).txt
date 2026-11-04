@@ -1,0 +1,129 @@
+kubectl get configmaps
+Description: Lists all ConfigMaps in the current namespace.
+
+kubectl get cm
+Description: Short form of "kubectl get configmaps".
+
+kubectl get cm -o wide
+Description: Lists ConfigMaps with additional information.
+
+kubectl get cm myconfig
+Description: Displays the "myconfig" ConfigMap.
+
+kubectl describe configmap myconfig
+Description: Displays detailed information about the "myconfig" ConfigMap.
+
+kubectl create configmap myconfig --from-literal=APP_ENV=dev
+Description: Creates a ConfigMap with a key named "APP_ENV" and value "dev".
+
+kubectl create configmap myconfig --from-literal=APP_ENV=dev --from-literal=APP_NAME=myapp
+Description: Creates a ConfigMap with multiple key-value pairs.
+
+kubectl create configmap myconfig --from-file=config.properties
+Description: Creates a ConfigMap using the contents of a file.
+
+
+kubectl get cm myconfig -o yaml
+Description: Displays the complete YAML configuration of the ConfigMap.
+
+kubectl get cm myconfig -o json
+Description: Displays the ConfigMap in JSON format.
+
+kubectl edit configmap myconfig
+Description: Opens the ConfigMap in an editor for modification.
+
+kubectl delete configmap myconfig
+Description: Deletes the "myconfig" ConfigMap.
+
+kubectl delete cm myconfig
+Description: Short form of deleting the ConfigMap.
+
+kubectl delete cm --all
+Description: Deletes all ConfigMaps in the current namespace.
+
+kubectl apply -f configmap.yaml
+Description: Creates or updates the ConfigMap using a YAML file.
+
+kubectl create -f configmap.yaml
+Description: Creates a ConfigMap from the YAML file.
+
+kubectl delete -f configmap.yaml
+Description: Deletes the ConfigMap defined in the YAML file.
+
+
+
+kubectl get secrets
+Description: Lists all Secrets in the current namespace.
+
+kubectl get secret
+Description: Short form of listing Secrets.
+
+kubectl get secret -o wide
+Description: Lists Secrets with additional information.
+
+kubectl get secret mysecret
+Description: Displays metadata about the "mysecret" Secret.
+
+kubectl describe secret mysecret
+Description: Displays information about the Secret without showing the actual decoded values.
+
+kubectl create secret generic mysecret --from-literal=username=admin
+Description: Creates a generic Secret containing a username.
+
+kubectl create secret generic mysecret --from-literal=username=admin --from-literal=password=secret123
+Description: Creates a Secret containing multiple key-value pairs.
+
+kubectl create secret generic mysecret --from-file=credentials.txt
+Description: Creates a Secret using the contents of a file.
+
+kubectl create secret generic mysecret --from-file=username.txt --from-file=password.txt
+Description: Creates a Secret using multiple files.
+
+kubectl get secret mysecret -o yaml
+Description: Displays the Secret YAML. Values in the data section are Base64 encoded.
+
+kubectl get secret mysecret -o json
+Description: Displays the Secret in JSON format.
+
+kubectl edit secret mysecret
+Description: Opens the Secret configuration in an editor.
+
+kubectl delete secret mysecret
+Description: Deletes the "mysecret" Secret.
+
+kubectl delete secret --all
+Description: Deletes all Secrets in the current namespace.
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ola
+  template:
+    metadata:
+      labels:
+        app: ola
+    spec:
+      containers:
+        - name: cont1
+          image: nginx
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: mustafa
+            - configMapRef:
+                name: cm2
+            - secretRef:
+                name: mysecret
+          env:
+            - name: myenv
+              valueFrom:
+                configMapKeyRef:
+                  name: cm3
+                  key: LOG_LEVEL

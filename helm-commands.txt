@@ -1,0 +1,77 @@
+helm version
+Description: Displays the installed Helm version.
+
+helm create myhelm
+Description: Creates a new Helm chart named "myhelm".
+
+helm install myrelease .
+Description: Installs the Helm chart from the current directory as the "myrelease" release.
+
+helm ls
+Description: Lists all installed Helm releases in the current namespace.
+
+helm upgrade myrelease .
+Description: Upgrades the "myrelease" Helm release using the chart in the current directory.
+
+helm history myrelease
+Description: Displays the revision history of the "myrelease" release.
+
+helm rollback myrelease 1
+Description: Rolls back the "myrelease" release to revision 1.
+
+helm uninstall myrelease
+Description: Uninstalls the "myrelease" Helm release.
+
+helm install flm
+Description: Attempts to install a Helm release named "flm". A chart name or chart path is normally required.
+
+helm create flm
+Description: Creates a new Helm chart named "flm".
+
+helm install devops .
+Description: Installs the Helm chart from the current directory as the "devops" release.
+
+helm upgrade devops .
+Description: Upgrades the "devops" Helm release using the chart in the current directory.
+
+helm rollback devops 1
+Description: Rolls back the "devops" release to revision 1.
+
+helm uninstall devops
+Description: Uninstalls the "devops" Helm release.
+
+helm package flm/
+Description: Packages the "flm" Helm chart into a versioned .tgz archive.
+
+helm index flm/
+Description: Invalid/non-standard Helm command. The correct command for creating a repository index is "helm repo index".
+
+helm repo index flm/
+Description: Creates an index.yaml file for Helm charts stored in the "flm" directory.
+
+helm repo index flm
+Description: Creates an index.yaml file for the "flm" chart repository directory.
+
+helm repo index .
+Description: Creates an index.yaml file for Helm charts in the current directory.
+
+helm create mustafa
+Description: Creates a new Helm chart named "mustafa".
+
+helm package mustafa
+Description: Packages the "mustafa" Helm chart into a versioned .tgz archive.
+
+helm repo ls
+Description: Lists all Helm repositories configured on the system.
+
+helm repo add myrepo https://devops0014.github.io/helm-demo12/
+Description: Adds the GitHub Pages Helm repository as "myrepo".
+
+helm repo upgrade
+Description: Invalid Helm command. The standard command for updating repository information is "helm repo update".
+
+helm repo update
+Description: Updates the local chart information from all configured Helm repositories.
+
+helm install v1 myrepo/mustafa
+Description: Installs the "mustafa" chart from the "myrepo" repository as a release named "v1".

@@ -1,6 +1,6 @@
 To install ingress, firstly we have to install nginx ingress controller:
 
-command: kubectl create -f https://raw.githubusercontent.com/kubernetes/ingressnginx/controller-v1.2.1/deploy/static/provi der/cloud/deploy.yaml
+command:  kubectl create -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/cloud/deploy.yaml
 
 Once we install ingress controller, we have to deploy 2 applications.
 github url: https://github.com/mustafaprojectsindevops/kubernetes/tree/master/ingress

@@ -1,0 +1,11 @@
+To install ingress, firstly we have to install nginx ingress controller:
+
+command: kubectl create -f https://raw.githubusercontent.com/kubernetes/ingressnginx/controller-v1.2.1/deploy/static/provi der/cloud/deploy.yaml
+
+Once we install ingress controller, we have to deploy 2 applications.
+github url: https://github.com/mustafaprojectsindevops/kubernetes/tree/master/ingress
+
+After executing all the files, use kubectl get ing to get ingress. After 30 seconds it will provide
+one load balancer dns.
+access those applications using dns/nginx and dns/httpd. So the traffic will route into both
+the applications as per the routing
